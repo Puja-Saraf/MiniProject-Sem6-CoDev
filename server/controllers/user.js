@@ -6,16 +6,11 @@ const userController = {
       const { user_id, requested_id } = req.query;
 
       const curUser = await User.findOne({ user_id });
-      const blocked_users = curUser.block;
+      // const blocked_users = curUser.block;
       const query = {
         $and: [
           {
             user_id: requested_id,
-          },
-          {
-            user_id: {
-              $nin: blocked_users,
-            },
           },
         ],
       };
