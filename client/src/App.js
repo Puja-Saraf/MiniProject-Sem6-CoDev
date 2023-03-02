@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
 import LandingPage from "./pages/LandingPage";
-import Signup from "./pages/Signup";
+// import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
-import Login from "./pages/Login";
+// import Login from "./pages/Login";
 import CreateProfile from "./pages/CreateProfile";
 import EditProfile from "./pages/EditProfile";
 import Profile from "./pages/Profile";
@@ -70,7 +70,7 @@ function App() {
             />
           )}
           <Route exact path="/" element={<LandingPage />} />
-          <Route
+          {/* <Route
             path="/signup"
             element={
               <>
@@ -79,8 +79,8 @@ function App() {
                 {cookies["UserId"] && <Navigate to="/dashboard" />}
               </>
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/login"
             element={
               <>
@@ -89,7 +89,7 @@ function App() {
                 {cookies["UserId"] && <Navigate to="/dashboard" />}
               </>
             }
-          />
+          /> */}
           <Route
             path="/createprofile"
             element={

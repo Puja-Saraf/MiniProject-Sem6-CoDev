@@ -15,7 +15,7 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
-app.use(morgan("combined"));
+// app.use(morgan("combined"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -64,7 +64,7 @@ app.get(
   "/auth/github/callback",
   passport.authenticate("github", { failureRedirect: "/auth/error" }),
   function (req, res) {
-    res.redirect("/");
+    res.redirect("/createprofile");
   }
 );
 app.get("/logout", (req, res) => {
@@ -77,7 +77,12 @@ app.get("/logout", (req, res) => {
 app.use("/users", userRouter);
 
 app.get("/*", (req, res) => {
+  console.log("req", req.user);
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+app.post("/auth/login", (req, res) => {
+  console.log("login", req.body);
+  res.redirect("/auth/github");
+});
 module.exports = app;

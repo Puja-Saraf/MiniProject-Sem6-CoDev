@@ -9,11 +9,11 @@ export default function LandingPage({ user }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (user) {
-      navigate("/dashboard");
-    } else {
-      navigate("/signup");
-    }
+    // if (user) {
+    //   navigate("/dashboard");
+    // } else {
+      navigate("/auth/github");
+    // }
   };
 
   return (
