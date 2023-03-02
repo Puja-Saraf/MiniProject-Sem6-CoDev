@@ -1,6 +1,11 @@
 const User = require("../models/user.js");
 
 const userController = {
+
+  getSelf: async (req, res) => {
+    console.log("git")
+    return res.json(req.user);
+  },
   getSingleUser: async (req, res) => {
     try {
       const { user_id, requested_id } = req.query;

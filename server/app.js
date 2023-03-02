@@ -17,7 +17,6 @@ app.use(
   })
 );
 // app.use(morgan("combined"));
-// app.use(morgan("combined"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -77,15 +76,15 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.use("/users", isLoggedIn, userRouter);
+app.use("/users", userRouter);
 
 app.get("/*", (req, res) => {
-  console.log("req", req.user);
+  // console.log("req", req.user);
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.post("/auth/login", (req, res) => {
-  console.log("login", req.body);
+  // console.log("login", req.body);
   res.redirect("/auth/github");
 });
 module.exports = app;

@@ -9,10 +9,12 @@ import logo from "../img/logo.svg";
 export default function LandingPage({ user }) {
   const navigate = useNavigate();
 
-  const handleClick = async () => {
-    const res = await api.login();
-    console.log(res.data);
-  };
+  // const handleClick = () => {
+  //   if (user) {
+  //     navigate("/dashboard");
+  //   } else {
+  //     navigate("/login");
+  // };
 
   return (
     <div className="snap-y w-full h-[100vh]">
@@ -42,12 +44,13 @@ export default function LandingPage({ user }) {
             Join us to connect with some of the best developers and collaborate
             to turn your idea into reality!
           </p>
-          <button
-            onClick={handleClick}
+          <a
+            // onClick={handleClick}
+            href="http://localhost:8000/auth/github"
             className="text-white bg-gradient-to-r from-[#fd2f6e] to-[#fe5740] px-6 py-4 rounded-full font-semibold mx-10 w-fit text-2xl my-14 cursor-pointer hover:from-[#FFD9C0] hover:to-[#FFD9C0] hover:text-[#fe5740]"
           >
             Get Started
-          </button>
+          </a>
         </div>
       </div>
     </div>

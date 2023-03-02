@@ -1,6 +1,6 @@
 /* eslint-disable */
 import "./App.css";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
@@ -13,40 +13,57 @@ import EditProfile from "./pages/EditProfile";
 import Profile from "./pages/Profile";
 import { api } from "./api";
 import Dashboard from "./pages/Dashboard";
+
+import queryString from "query-string";
+
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  // const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [user, setUser] = useState(null);
+
+  let navigate = useNavigate();
+  let location = useLocation();
 
   useEffect(() => {
     // console.log("useffect")
-    let isSubscribed = true;
-    const fetchData = async () => {
-      const params = {
-        user_id: cookies["UserId"],
-        requested_id: cookies["UserId"],
-      };
-      if (!params.user_id) {
-        return;
-      }
-      const data = await api.getSelf(params);
+    // let isSubscribed = true;
+    // const fetchData = async () => {
+    //   const params = {
+    //     user_id: items,
+    //     requested_id: items,
+    //   };
+    //   if (!params.user_id) {
+    //     return;
+    //   }
+    //   const data = await api.getSelf(params);
 
-      if (isSubscribed) {
-        setUser(data.data);
-      }
-    };
-    fetchData().catch(console.error);
+    //   if (isSubscribed) {
+    //     setUser(data.data);
+    //   }
+    // };
+    // fetchData().catch(console.error);
 
-    return () => {
-      isSubscribed = false;
-      // console.log("cleanup")
-    };
-  }, [cookies["UserId"]]);
+    // return () => {
+    //   isSubscribed = false;
+    //   // console.log("cleanup")
+    // };
+
+    var query = queryString.parse(location.search);
+    if (query.token) {
+      window.localStorage.setItem("jwt", query.token);
+      navigate("/dashboard");
+   }
+  //  const items = JSON.parse(localStorage.getItem('jwt'));
+  // if (items) {
+  //  setUser(items);
+  // }
+  }, [location.search]);
 
   // console.log(user);
 
+  const items = JSON.parse(localStorage.getItem('jwt'));
+
   return (
     <div className="App">
-      <BrowserRouter>
         <Routes>
           {user && !user.profile_completed && (
             <Route
@@ -75,8 +92,8 @@ function App() {
             element={
               <>
                 <Navbar user={user} solid={false} />{" "}
-                {!cookies["UserId"] && <Signup />}
-                {cookies["UserId"] && <Navigate to="/dashboard" />}
+                {!items && <Signup />}
+                {items && <Navigate to="/dashboard" />}
               </>
             }
           /> */}
@@ -85,8 +102,8 @@ function App() {
             element={
               <>
                 <Navbar user={user} solid={false} />
-                {!cookies["UserId"] && <Login />}
-                {cookies["UserId"] && <Navigate to="/dashboard" />}
+                {!items && <Login />}
+                {items && <Navigate to="/dashboard" />}
               </>
             }
           /> */}
@@ -94,8 +111,8 @@ function App() {
             path="/createprofile"
             element={
               <>
-                {cookies["UserId"] && <CreateProfile />}
-                {!cookies["UserId"] && <Navigate to="/" />}
+                {items && <CreateProfile />}
+                {!items && <Navigate to="/" />}
               </>
             }
           />
@@ -103,8 +120,8 @@ function App() {
             path="/editprofile"
             element={
               <>
-                {cookies["UserId"] && <EditProfile user={user} />}
-                {!cookies["UserId"] && <Navigate to="/" />}
+                {items && <EditProfile user={user} />}
+                {!items && <Navigate to="/" />}
               </>
             }
           />
@@ -112,13 +129,13 @@ function App() {
             path="/dashboard"
             element={
               <>
-                {cookies["UserId"] && (
+                {items && (
                   <>
                     <Navbar user={user} solid={true} />
                     <Dashboard />
                   </>
                 )}
-                {!cookies["UserId"] && <Navigate to="/" />}
+                {!items && <Navigate to="/" />}
               </>
             }
           />
@@ -132,12 +149,11 @@ function App() {
                     <Profile user={user} />
                   </>
                 )}
-                {/* {!cookies["UserId"] && <Navigate to="/" />} */}
+                {/* {!items && <Navigate to="/" />} */}
               </>
             }
           />
         </Routes>
-      </BrowserRouter>
     </div>
   );
 }
