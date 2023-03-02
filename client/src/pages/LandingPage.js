@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../api";
 import landing1 from "../img/landing1.svg";
 import landing2 from "../img/landing2.svg";
 import logo from "../img/logo.svg";
@@ -8,12 +9,9 @@ import logo from "../img/logo.svg";
 export default function LandingPage({ user }) {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    if (user) {
-      navigate("/dashboard");
-    } else {
-      navigate("/signup");
-    }
+  const handleClick = async () => {
+    const res = await api.login();
+    console.log(res.data);
   };
 
   return (

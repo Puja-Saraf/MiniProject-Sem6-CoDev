@@ -126,13 +126,13 @@ function App() {
             path="/profile"
             element={
               <>
-                {cookies["UserId"] && (
+                {true && (
                   <>
                     <Navbar user={user} solid={true} />
                     <Profile user={user} />
                   </>
                 )}
-                {!cookies["UserId"] && <Navigate to="/" />}
+                {/* {!cookies["UserId"] && <Navigate to="/" />} */}
               </>
             }
           />
